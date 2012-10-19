@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html data-jslog="true">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jslog using jQuery by Abhishek Dev</title>
+<link rel="stylesheet" href="lib/syntaxhighlighter-JS/styles/shCoreDefault.css"/>
+<link rel="stylesheet" href="../jslog.css"/>
+<script src="lib/syntaxhighlighter-JS/scripts/shCore.js"></script>
+<script src="lib/syntaxhighlighter-JS/scripts/shBrushJScript.js"></script>
+<script src="lib/syntaxhighlighter-JS/scripts/shBrushCss.js"></script>
+<script src="lib/jquery-1.8.2.min.js"></script>
+<script src="lib/jquery-ui-1.9.0.custom.min.js"></script>
+<script src="../jslog_jq.js"></script>
+<script>
+var page = {
+	init : function(){
+		$("#btn1").click(function(){
+		  jslog.debug("... debug message");
+		  jslog.info("... informatory message");
+		  jslog.warn("... warning message");
+		  jslog.error("... error message");
+		});
+		
+		$("#btn2").click(function(){
+			jslog.log("DEBUG","debug message 1");
+  			jslog.log("INFO","info message 1");
+		});
+	}
+}
+$(function(){
+	page.init();
+	SyntaxHighlighter.highlight();
+});
+</script>
+</head>
+
+<body>
+<section>
+  <h2>Types of Logging</h2>
+  <pre class="brush: js" title="Most common logging">
+  jslog.debug("... debug message");
+  jslog.info("... informatory message");
+  jslog.warn("... warning message");
+  jslog.error("... error message");
+  </pre>
+  <input type="button" id="btn1" value="Run"/>
+</section>
+<section>
+  <h2>Core Logging</h2>
+  <pre class="brush: js" title="The core logging methods">
+  jslog.log("DEBUG","debug message 1");
+  jslog.log("INFO","info message 1"); // etc...
+  </pre>
+  <input type="button" id="btn2" value="Run"/>
+</section>
+</body>
+</html>

@@ -1,0 +1,195 @@
+/* 
+    Document   : jslog
+    Created on : Feb 2, 2012, 9:03:48 PM
+    Author     : abhishek.dev
+    Description:
+        jslog stylesheet
+*/
+
+.jslog {
+	
+
+@base03: #002b36;
+@base02: #073642;
+@base01: #586e75;
+@base00: #657b83;
+@base0: #839496;
+@base1: #93a1a1;
+@base2: #eee8d5;
+@base3: #fdf6e3;
+@yellow: #b58900;
+@orange: #cb4b16;
+@red: #dc322f;
+@magenta: #d33682;
+@violet: #6c71c4;
+@blue: #268bd2;
+@cyan: #2aa198;
+@green: #859900;
+
+@jslogBgColor : @base3;
+@jslogColor: @base03;
+@jslogBorderColor: @yellow;
+@appfont: Tahoma,Helvetica,Arial;
+
+	font-family: @appfont; 
+	color: @jslogColor; 
+	font-size:9px;
+	line-height:normal;
+	letter-spacing: normal;
+	position: fixed;
+	_position:absolute;
+	z-index:10000;
+	top: 2px;
+	left: 2px;
+
+	select, input{
+		font:99% @appfont; 
+	}
+
+	.dontDisplay{
+		display: none;
+	}
+
+	.counter{
+		cursor: pointer;
+		position: absolute;
+		background-color: @jslogBgColor; 
+		border:1px solid @jslogBorderColor;
+		padding:2px;
+		user-select: none;
+		box-shadow: 0 0 3px #aaa;
+	}
+
+	.content{
+		text-align:left;
+		border:1px solid @jslogBorderColor;
+		width:400px;
+		position: absolute;
+		top:20px;
+		left:0px;
+		background-color:white;
+		box-shadow: 0 0 3px #aaa;
+	}
+
+	.header{
+		padding:2px;
+		border-bottom:1px solid @base2;
+		background-color: @jslogBgColor;
+		box-shadow: 0px 1px 2px @base2;
+		position: relative;
+		
+		label{
+			color: @base01;
+			padding-right: 3px;
+			border-right: 1px solid #bbb;
+		}
+		
+		input{
+			cursor: pointer;
+			color: @base03;
+			margin: 0px 1px;
+		}
+		
+		.clear{
+			color: @blue;
+			margin-left: 3px;
+		}
+		
+		.levelList{
+		}
+		
+		.close{
+			color: @red;
+			font: monospace;
+			cursor: pointer;
+			display: block;
+			height: 16px;
+			line-height: 16px;
+			overflow: hidden;
+			position: absolute;
+			right: 1px;
+			text-align: center;
+			top: 1px;
+			vertical-align: middle;
+			width: 16px;
+		}
+	}
+
+	.log{
+		height:240px;
+		overflow:auto;
+		font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+		font-size: 11px;
+		margin: 0;
+		padding: 0;
+		list-style: none inside;
+
+		li{
+			
+			&.odd{
+				background-color: #ffffff;
+			}
+			&.even{
+				background-color: #f6f6f6;
+			}
+			word-wrap: break-word;
+			border-bottom: 1px solid #CCCCCC;
+
+			ins{
+				.noTextFormat{
+					width: 40px;
+				}
+				padding:0 3px;
+				float: left;
+				font-weight:bold;
+				text-decoration: none;
+				overflow: hidden;
+			}
+			pre{
+				display:none;
+			}
+			em{
+				font-style: normal;
+				padding: 0 5px 0 3px;
+				color: @violet;
+				*float: left;
+				overflow: hidden;
+			}
+			
+			span{
+			}
+			
+			&.DEBUG{
+				ins{
+					background-color: blue;
+					color: white;
+				}
+			}
+			&.INFO{
+				ins{
+					background-color: #10FF10;
+					color: @base02;
+				}
+			}
+			&.WARN{
+				ins{
+					background-color: yellow;
+					color: @base01;
+				}
+			}
+			&.ERROR{
+				ins{
+					background-color: @red;
+					color: white;
+				}
+			}
+		}
+	}
+
+	.footer{
+		display: none;
+		padding-left:2px;
+		border-top:1px solid black;
+		background-color: @jslogBgColor;
+	}
+}
