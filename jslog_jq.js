@@ -441,7 +441,7 @@ var jslog = function($){
 	// This makes it fairly difficult for the end-user to trigger the logger at runtime without permission
 	// and also enabled the log statements to stay in page as we use dummy empty functions when the JSLOG is disabled.
 	return function _secureDuggerInstall(){
-		var jslogPageFlag = window["javaScriptLoggerEnabled"] || $('html').data('jslog') || window.location.href.match(/enablejslog/),
+		var jslogPageFlag = $('html').data('jslog'),
 		emptyFn = function(){},
 		/**
 		* @class
