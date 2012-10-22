@@ -274,7 +274,7 @@ var jslog = function($){
 				jsConsole = console[msgLevelName];
 
 				if(typeof jsConsole == "function"){
-					jsConsole(msg);
+					jsConsole.call(console,msg);
 				}else{
 					console.log(msg);
 				}
