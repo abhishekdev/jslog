@@ -19,7 +19,7 @@ MIT License @ http://bit.ly/abhishekdevMIT-License
   --credits     Extended, but re-written, from scratch from the original jslog by Andre Lewis, andre@earthcode.com
   --version     1.0
   </em>
-* @requires    jQuery 1.4.2+
+* @requires    jQuery 1.6.2+
 */
 
 var jslog = function($){
