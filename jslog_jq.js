@@ -333,7 +333,17 @@ var jslog = function($){
             }
 
             return window.console ? jslog_toConsole : null;
-        }()
+        }(),
+		
+		/* Not Required as unused till now* /
+		htmlDecode : function (value){
+		  return $('<div/>').html(value).text();
+		},
+		/* */
+		
+		htmlEncode : function (value){
+		  return $('<div/>').text(value).html();
+		}
     };
 
 
@@ -471,7 +481,7 @@ var jslog = function($){
             linefeed = '&#13;&#10;'+linefeed;
         }
 
-        li = '<li><ins>'+ level + '</ins><em>'+logtime+'</em><span>'+msg+'</span><div style="clear: both;">'+linefeed;
+        li = '<li><ins>'+ level + '</ins><em>'+logtime+'</em><span>'+JSLOG.util.htmlEncode(msg)+'</span><div style="clear: both;">'+linefeed;
         $logEntry = $(li);
 
         $logEntry.addClass( (jslogObject.counter%2 == 0 ? "odd" : "even") + " " + logType);
