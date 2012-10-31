@@ -21,6 +21,9 @@ Opera 10+, Firefox 3+, IE 6+, Safari 5+, Chrome 6+
 
 ### Unit Tests ###
 
+### Build ###
+Put closure compiler.jar in the root folder of the project and run this command
+java -jar compiler.jar --externs _externs.js --externs _jquery-extern.js --warning_level VERBOSE --js jslog_jq.js --js_output_file jslog_jq.min.js
 
 ## Release History ##
 
@@ -29,4 +32,4 @@ Opera 10+, Firefox 3+, IE 6+, Safari 5+, Chrome 6+
 
 ## License ##
 Copyright (c) 2010 Abhishek Dev
-Licensed under the MIT license.
+Licensed under the MIT license. http://bit.ly/abhishekdevMIT-License
