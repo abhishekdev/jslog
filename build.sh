@@ -1,0 +1,1 @@
+java -jar compiler.jar --externs _externs.js --externs _jquery-extern.js --warning_level VERBOSE --js jslog_jq.js --js_output_file jslog_jq.min.js
