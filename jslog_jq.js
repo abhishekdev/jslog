@@ -196,27 +196,6 @@ var jslog = function($){
         this.ui.clearLog();
     };
 
-    // This is a Windows OS only feature
-    if(window.clipboardData){
-        JSLOG.prototype.toClipboard = function(){
-            var code = this.toString();
-
-            window.clipboardData.setData('text', code);
-            alert("Logs copied to clipboard");
-        };
-    }
-
-    JSLOG.prototype.exportView = function(){
-        var jslogwindow = window.open('', 'jsLogger', 'width=750, height=400, location=0, resizable=1, menubar=1, scrollbars=1'),
-        logText;
-
-        if(jslogwindow){
-            logText = this.toString();
-            jslogwindow.document.write('<pre>'+logText+'</pre>');
-            jslogwindow.focus();
-        }
-    };
-
     JSLOG.prototype.setOfflineState = function (key, value){
         return this.config.persistState ? JSLOG.util.setOfflineState(this.config.name+key,value) : null;
     };
@@ -390,10 +369,11 @@ var jslog = function($){
         '</select></label>'+
         '<input type="button" id="'+name+'_clear" class="clear" value="Clear"/>' +
         '<input type="button" id="'+name+'_viewPlain" class="export" value="Export"/>'+
-        (jslogObject.toClipboard ? '<input type="button" id="'+name+'_copyToClipBoard" class="copyToClpBrd" value="Copy To Clipboard"/>': '') +
+        (self.toClipboard ? '<input type="button" id="'+name+'_copyToClipBoard" class="copyToClpBrd" value="Copy To Clipboard"/>': '') +
         '<span id="'+name+'_closeBtn" class="close" title="Close">X</span></div>'+
         '<ol id="'+name+'_logDisplay" class="log"></ol>'+
         '<div id="'+name+'_footer" class="footer"></div>'+
+		'<div id="'+name+'_alert" class="alert"></div>'+
         '</div></div>',
         $uiHTML = $(uiHTML),
         isOpen = self.getOfflineState("_logui_visibility");
@@ -439,10 +419,10 @@ var jslog = function($){
             self.close();
         })
         .delegate(".export","click",function(e){
-            jslogObject.exportView();
+            self.exportView();
         })
         .delegate(".copyToClpBrd","click", function(e){
-            jslogObject.toClipboard && jslogObject.toClipboard();
+            self.toClipboard && self.toClipboard();
         });
 
         // Add UI on DOM ready
@@ -505,6 +485,48 @@ var jslog = function($){
     JSLOG.UI.prototype.getOfflineState = function (key){
         return this.persistState ? JSLOG.util.getOfflineState(this.name+key) : null;
     };
+	
+	/** Outputs the logs as a string suitable for use on browser UI. Handles cases like HTML encoding,  IE Bugs (pre tag not maintaining linebreaks)
+	 * @function
+	 * @param {boolean=} htmlLineBreak
+	 * @returns {string}
+	 * @reference IE Bug Fix (http://www.quirksmode.org/bugreports/archives/2004/11/innerhtml_and_t.html)
+	 */
+	JSLOG.UI.prototype.toUIString = function (htmlLineBreak){
+		var uiString="";
+		
+		if($.browser.msie){
+			uiString = this.$log.html().replace(/\r\n/g,"_jslog_LINEBREAK");
+			uiString = $(uiString).text();
+			uiString = JSLOG.util.htmlEncode(uiString).replace(/_jslog_LINEBREAK/g, htmlLineBreak ? "<br/>": "\r\n");
+		}else{
+			uiString = this.$log.text();
+			uiString = JSLOG.util.htmlEncode(uiString);
+		}
+		
+        return uiString;
+    };
+	
+	 // This is a Windows OS only feature
+    if(window.clipboardData){
+        JSLOG.UI.prototype.toClipboard = function(){
+            var code = this.toUIString();
+            window.clipboardData.setData('text', code);
+			alert("Logs copied to clipboard");
+        };
+    }
+
+    JSLOG.UI.prototype.exportView = function(){
+        var jslogwindow = window.open('', 'jsLogger', 'width=750, height=400, location=0, resizable=1, menubar=1, scrollbars=1'),
+        logText;
+
+        if(jslogwindow){
+			logText = this.toUIString(true);
+			jslogwindow.document.write('<html><head><title>jsLog : Export View</title></head><body onLoad="self.focus()"><pre>'
+									   +logText
+									   +'</pre></body></html>');
+        }
+    };
 
     // Instantiate the logger on the page only if the HTML tag has a data attribute data-jslog="true" OR
     // if a global variable named "javaScriptLoggerEnabled" is found with a true value.
@@ -523,7 +545,6 @@ var jslog = function($){
             clearLog : emptyFn,
             debug : emptyFn,
             error : emptyFn,
-            exportView : emptyFn,
             getLogLevel : emptyFn,
             getOfflineState : emptyFn,
             info : emptyFn,
