@@ -24,6 +24,7 @@ var page = {
 		$("#btn2").click(function(){
 			jslog.log("DEBUG","debug message 1");
   			jslog.log("INFO","info message 1");
+			jslog.log("WARN"," HTML Encoded log: "+$('body').html());
 		});
 	}
 }
