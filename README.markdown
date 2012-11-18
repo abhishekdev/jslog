@@ -1,6 +1,6 @@
 # jslog #
 
-Version: v1.0, Last updated: 2/Feb/2012
+Version: v1.1, Last updated: 17/Nov/2012
 
 jslog is a JavaScript Logging utility. The intension is provide an abstraction for the logging capabilities in the a source code.
 It helps especially when the browsers console utility is not available (e.g. IE6/7) or when there is too many inline scripts getting executed to track in the browser.
@@ -27,9 +27,10 @@ java -jar compiler.jar --externs _externs.js --externs _jquery-extern.js --warni
 
 ## Release History ##
 
+1.1 - (17/Nov/2012) Few encoding and IE fixes  for exporting and copy to clipboard
 1.0 - (2/Feb/2012) Initial release  
 
 
 ## License ##
-Copyright (c) 2010 Abhishek Dev
+Copyright (c) 2012 Abhishek Dev
 Licensed under the MIT license. http://bit.ly/abhishekdevMIT-License

@@ -1,11 +1,11 @@
 /** @license
-jslog  - v1.0 - 2/Feb/2012
+jslog  - v1.1 - 17/Nov/2012
 Copyright (C) 2012 by Abhishek Dev
 MIT License @ http://bit.ly/abhishekdevMIT-License
 */
 
 /*!
-jslog  - v1.0 - 2/Feb/2012
+jslog  - v1.1 - 17/Nov/2012
 Copyright (C) 2012 by Abhishek Dev
 MIT License @ http://bit.ly/abhishekdevMIT-License
 */
@@ -13,11 +13,11 @@ MIT License @ http://bit.ly/abhishekdevMIT-License
 /**
 * @fileoverview jslog is a logging utility for JavaScript. It is built using the jQuery library and hence depends on its inclusion
 * @author      Abhishek Dev
-* @date        2012-Feb-02
+* @date        2012-Nov-17
 * @description
   <em>
   --credits     Extended, but re-written, from scratch from the original jslog by Andre Lewis, andre@earthcode.com
-  --version     1.0
+  --version     1.1
   </em>
 * @requires    jQuery 1.6.2+
 */
@@ -373,7 +373,7 @@ var jslog = function($){
         '<span id="'+name+'_closeBtn" class="close" title="Close">X</span></div>'+
         '<ol id="'+name+'_logDisplay" class="log"></ol>'+
         '<div id="'+name+'_footer" class="footer"></div>'+
-		'<div id="'+name+'_alert" class="alert"></div>'+
+		//'<div id="'+name+'_alert" class="alert"></div>'+
         '</div></div>',
         $uiHTML = $(uiHTML),
         isOpen = self.getOfflineState("_logui_visibility");
@@ -532,7 +532,7 @@ var jslog = function($){
     // if a global variable named "javaScriptLoggerEnabled" is found with a true value.
     // This makes it fairly difficult for the end-user to trigger the logger at runtime without permission
     // and also enabled the log statements to stay in page as we use dummy empty functions when the JSLOG is disabled.
-    return function _secureDuggerInstall(){
+    return function _secureLoggerInstall(){
         var jslogPageFlag = $('html').data('jslog'),
         emptyFn = function(){},
         /**
@@ -542,6 +542,8 @@ var jslog = function($){
         DUMMY_JSLOG = emptyFn;
 
         DUMMY_JSLOG.prototype = {
+			counter: 0,
+        	config : {},
             clearLog : emptyFn,
             debug : emptyFn,
             error : emptyFn,
