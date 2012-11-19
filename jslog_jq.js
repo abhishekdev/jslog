@@ -15,20 +15,19 @@ MIT License @ http://bit.ly/abhishekdevMIT-License
 * @author      Abhishek Dev
 * @date        2012-Nov-17
 * @description
-  <em>
   --credits     Extended, but re-written, from scratch from the original jslog by Andre Lewis, andre@earthcode.com
   --version     1.1
-  </em>
 * @requires    jQuery 1.6.2+
 */
 
-var jslog = function($){
+var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
 
     /**
 	* @class
 	* @constructor
 	* @param {string=} level The log can be initialized with a optional specific label.
 	* @param {Object=} options The log can be initialized with a optional configuration object, else the default will be used.
+	* @author Abhishek Dev
 	*/
     var JSLOG = function (level,options){
 
@@ -535,13 +534,7 @@ var jslog = function($){
     return function _secureLoggerInstall(){
         var jslogPageFlag = $('html').data('jslog'),
         emptyFn = function(){},
-        /**
-         * @class
-         * @constructor
-         */
-        DUMMY_JSLOG = emptyFn;
-
-        DUMMY_JSLOG.prototype = {
+		_DUMMY_JSLOG_PROPERTIES = {
 			counter: 0,
         	config : {},
             clearLog : emptyFn,
@@ -559,9 +552,16 @@ var jslog = function($){
             toArray : emptyFn,
             toString : emptyFn,
             warn : emptyFn
-        };
+        },
+        /**
+         * @class
+         * @constructor
+         */
+        DUMMY_JSLOG = emptyFn;
 
-        return (jslogPageFlag === true) ? new JSLOG("DEBUG") : new DUMMY_JSLOG();
+        DUMMY_JSLOG.prototype = $.extend(_DUMMY_JSLOG_PROPERTIES, _USER_EXTENDED_DUMMY_JSLOG);
+
+        return (jslogPageFlag === true) ? new JSLOG(_DEFAULT_LEVEL) : new DUMMY_JSLOG();
     }();
 
-}(jQuery);
+}(jQuery, "DEBUG", {});
