@@ -298,7 +298,7 @@ var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
             if(err != null && err != "") {
                 details = "\n -- Error Info --"  ;
                 details += "\n name: " + err.name  ;
-				details += "\n number: " + ( err.number ? err.number : "N/A" ); // property number does not always exist on Error Object
+                details += "\n number: " + ( err.number ? err.number : "N/A" ); // property number does not always exist on Error Object
                 details += "\n message: " + err.message;
                 details += "\n description: " + err.description;
             }
