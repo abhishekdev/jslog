@@ -539,6 +539,11 @@ var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
     return function _secureLoggerInstall(){
         var jslogPageFlag = $('html').data('jslog'),
         emptyFn = function(){},
+        /**
+         * @class
+         * @constructor
+         */
+        DUMMY_JSLOG = emptyFn,
 		_DUMMY_JSLOG_PROPERTIES = {
 			counter: 0,
         	config : {},
@@ -557,12 +562,7 @@ var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
             toArray : emptyFn,
             toString : emptyFn,
             warn : emptyFn
-        },
-        /**
-         * @class
-         * @constructor
-         */
-        DUMMY_JSLOG = emptyFn;
+        };
 
         DUMMY_JSLOG.prototype = $.extend(_DUMMY_JSLOG_PROPERTIES, _USER_EXTENDED_DUMMY_JSLOG);
 
