@@ -1,23 +1,23 @@
 /** @license
-jslog  - v1.1 - 17/Nov/2012
-Copyright (C) 2012 by Abhishek Dev
+jslog  - v1.2 - 19/Mar/2013
+Copyright (C) 2013 by Abhishek Dev
 MIT License @ http://bit.ly/abhishekdevMIT-License
 */
 
 /*!
-jslog  - v1.1 - 17/Nov/2012
-Copyright (C) 2012 by Abhishek Dev
+jslog  - v1.2 - 19/Mar/2013
+Copyright (C) 2013 by Abhishek Dev
 MIT License @ http://bit.ly/abhishekdevMIT-License
 */
 
 /**
 * @fileoverview jslog is a logging utility for JavaScript. It is built using the jQuery library and hence depends on its inclusion
 * @author      Abhishek Dev
-* @date        2012-Nov-17
+* @date        2013-Mar-19
 * @description
   --credits     Extended, but re-written, from scratch from the original jslog by Andre Lewis, andre@earthcode.com
-  --version     1.1
-* @requires    jQuery 1.6.2+
+  --version     1.2
+* @requires    jQuery 1.6.2+, Tested with jQuery 1.9.1
 */
 
 var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
@@ -298,7 +298,7 @@ var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
             if(err != null && err != "") {
                 details = "\n -- Error Info --"  ;
                 details += "\n name: " + err.name  ;
-                details += "\n number: " + err.number;
+				details += "\n number: " + ( err.number ? err.number : "N/A" ); // property number does not always exist on Error Object
                 details += "\n message: " + err.message;
                 details += "\n description: " + err.description;
             }
@@ -338,12 +338,16 @@ var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
 	 * @constructor
 	 */
     JSLOG.UI = function(jslogObject ){
+    	var _ua = navigator.userAgent.toLowerCase(),
+        	is_msie = /msie/.test(_ua);
+    
         (function _init(self){
 
             jslogObject.config.noCSSFile && !$("#jslog_style").length && $('<style id="jslog_style">'+
                 '.jslog{font-family:Tahoma,Helvetica,Arial;color:#002b36;font-size:9px;line-height:normal;letter-spacing:normal;position:fixed;_position:absolute;z-index:10000;top:2px;left:2px}.jslog select,.jslog input{font:99% Tahoma,Helvetica,Arial}.jslog .dontDisplay{display:none}.jslog .counter{cursor:pointer;position:absolute;background-color:#fdf6e3;border:1px solid #b58900;padding:2px;user-select:none;box-shadow:0 0 3px #aaa}.jslog .content{text-align:left;border:1px solid #b58900;width:400px;position:absolute;top:20px;left:0;background-color:white;box-shadow:0 0 3px #aaa}.jslog .header{padding:2px;border-bottom:1px solid #eee8d5;background-color:#fdf6e3;box-shadow:0 1px 2px #eee8d5;position:relative}.jslog .header label{color:#586e75;padding-right:3px;border-right:1px solid #bbb}.jslog .header input{cursor:pointer;color:#002b36;margin:0 1px}.jslog .header .clear{color:#268bd2;margin-left:3px}.jslog .header .close{color:#dc322f;font:monospace;cursor:pointer;display:block;height:16px;line-height:16px;overflow:hidden;position:absolute;right:1px;text-align:center;top:1px;vertical-align:middle;width:16px}.jslog .log{height:240px;overflow:auto;font-family:Consolas,"Andale Mono WT","Andale Mono","Lucida Console","Lucida Sans Typewriter","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono","Nimbus Mono L",Monaco,"Courier New",Courier,monospace;font-size:11px;margin:0;padding:0;list-style:none inside}.jslog .log li{word-wrap:break-word;border-bottom:1px solid #ccc}.jslog .log li.odd{background-color:#fff}.jslog .log li.even{background-color:#f6f6f6}.jslog .log li ins{padding:0 3px;float:left;font-weight:bold;text-decoration:none;overflow:hidden}.jslog .log li ins .noTextFormat{width:40px}.jslog .log li pre{display:none}.jslog .log li em{font-style:normal;padding:0 5px 0 3px;color:#6c71c4;*float:left;overflow:hidden}.jslog .log li.DEBUG ins{background-color:blue;color:white}.jslog .log li.INFO ins{background-color:#10ff10;color:#073642}.jslog .log li.WARN ins{background-color:yellow;color:#586e75}.jslog .log li.ERROR ins{background-color:#dc322f;color:white}.jslog .footer{display:none;padding-left:2px;border-top:1px solid black;background-color:#fdf6e3}'
                 +'</style>').appendTo('head');
 
+            self.isIE = is_msie;
             self.name = jslogObject.config.name;
             self.persistState = jslogObject.config.persistState;
             self.build(jslogObject);
@@ -492,14 +496,15 @@ var jslog = function($, _DEFAULT_LEVEL, _USER_EXTENDED_DUMMY_JSLOG){
 	 * @reference IE Bug Fix (http://www.quirksmode.org/bugreports/archives/2004/11/innerhtml_and_t.html)
 	 */
 	JSLOG.UI.prototype.toUIString = function (htmlLineBreak){
-		var uiString="";
+		var uiString="",
+			self = this;
 		
-		if($.browser.msie){
-			uiString = this.$log.html().replace(/\r\n/g,"_jslog_LINEBREAK");
+		if(self.isIE){
+			uiString = self.$log.html().replace(/\r\n/g,"_jslog_LINEBREAK");
 			uiString = $(uiString).text();
 			uiString = JSLOG.util.htmlEncode(uiString).replace(/_jslog_LINEBREAK/g, htmlLineBreak ? "<br/>": "\r\n");
 		}else{
-			uiString = this.$log.text();
+			uiString = self.$log.text();
 			uiString = JSLOG.util.htmlEncode(uiString);
 		}
 		
